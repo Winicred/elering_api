@@ -150,7 +150,7 @@ $(document).ready(function () {
                         for (let i = 0; i < response.length; i++) {
                             const end_date = convert_date(response[i].timestamp, true)
 
-                            content += '<tr>' + end_date + '</td>'
+                            content += '<tr><td>' + end_date + '</td>'
                             content += '<td>' + response[i].price + '</td></tr>'
                         }
                         content += '</tbody>'
