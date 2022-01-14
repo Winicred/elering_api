@@ -11,12 +11,134 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Document</title>
 </head>
+
+<style>
+    button {
+        outline: 0;
+        border: 1px solid black;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    table{
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 10px 0;
+    }
+
+    th, td{
+        padding: 10px 20px;
+        border: 1px solid #000;
+    }
+</style>
+
 <body>
 
-<div id="myChartBody">
-    <canvas id="myChart"></canvas>
+<select id="select_option">
+    <option hidden>Выберите метод</option>
+    <option value="1">Цена на текущий час</option>
+    <option value="2">Данные о ценах NordPool на сутки вперед</option>
+    <option value="3">Данные NordPool об объемах покупок и продаж на сутки вперед</option>
+</select>
+
+<div id="ee_current">
+    <p>Этот метод получает цену NordPool за текущий час</p>
+
+    <table id="ee_current_table"></table>
+
+    <div id="ee_current_options">
+        <label for="remove_id">Убрать ID</label>
+        <input id="remove_id" type="checkbox" class="remove_id">
+
+        <br>
+
+        <label for="remove_date">Убрать дату</label>
+        <input id="remove_date" type="checkbox" class="remove_date">
+
+        <br>
+
+        <label for="remove_price">Убрать цену</label>
+        <input id="remove_price" type="checkbox" class="remove_price">
+    </div>
+
+    <button id="ee_current_submit">Отправить</button>
 </div>
 
+<div id="day_ahead_price">
+    <p>Этот метод позволяет получать цены NordPool на сутки вперед за выбранный период времени (максимально допустимый период времени для запроса — один год), допустимые форматы даты: «гггг-ММ-дд ЧЧ:мм», «гггг-ММ-дд'Т'чч»: мм:ссZ'</p>
+
+    <label for="day_ahead_price_start_date">Введите начальную дату</label>
+    <input type="datetime-local" id="day_ahead_price_start_date">
+
+    <br>
+
+    <label for="day_ahead_price_end_date">Введите конечную дату</label>
+    <input type="datetime-local" id="day_ahead_price_end_date">
+
+    <br>
+
+    <label for="day_ahead_region">Выберите регион</label>
+    <select id="day_ahead_region">
+        <option value="ee">EE</option>
+        <option value="fi">FI</option>
+        <option value="lv">LV</option>
+        <option value="lt">LT</option>
+    </select>
+
+    <br>
+
+    <table id="day_ahead_price_table"></table>
+
+    <div id="day_ahead_price_options">
+        <label for="remove_id">Убрать ID</label>
+        <input id="remove_id" type="checkbox" class="remove_id">
+
+        <br>
+
+        <label for="remove_date">Убрать дату</label>
+        <input id="remove_date" type="checkbox" class="remove_date">
+
+        <br>
+
+        <label for="remove_price">Убрать цену</label>
+        <input id="remove_price" type="checkbox" class="remove_price">
+    </div>
+
+    <button id="day_ahead_price_submit">Отправить</button>
+</div>
+
+<div id="volumes_data">
+    <p>Этот метод позволяет получать объемы покупок и продаж NordPool на сутки вперед за выбранный период времени (максимально допустимый период времени для запроса — один год), допустимые форматы даты: «гггг-ММ-дд ЧЧ:мм», «гггг-ММ-дд'Т». 'чч:мм:ссZ'</p>
+
+    <label for="volumes_data_region">Выберите регион</label>
+    <select id="volumes_data_region">
+        <option value="ee">EE</option>
+        <option value="fi">FI</option>
+        <option value="lv">LV</option>
+        <option value="lt">LT</option>
+    </select>
+
+    <br>
+
+    <table id="volumes_data_table"></table>
+
+    <div id="volumes_data_options">
+        <label for="remove_date">Убрать дату</label>
+        <input id="remove_date" type="checkbox" class="remove_date">
+
+        <br>
+
+        <label for="remove_in">Убрать колонку с покупками</label>
+        <input id="remove_in" type="checkbox" class="remove_in">
+
+        <br>
+
+        <label for="remove_out">Убрать колонку с продажами</label>
+        <input id="remove_out" type="checkbox" class="remove_out">
+    </div>
+
+    <button id="volumes_data_submit">Отправить</button>
+</div>
 </body>
-<script src="/js/chart.js"></script>
+<script src="/js/action.js"></script>
 </html>

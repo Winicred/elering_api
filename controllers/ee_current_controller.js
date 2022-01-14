@@ -8,7 +8,6 @@ exports.create = async (req, res) => {
     let url = "https://dashboard.elering.ee/api/nps/price/EE/current";
 
     await fetch(url)
-        .then(res => res.json())
         .then(data => {
                 const date = new Date(data.data[0].timestamp * 1000);
                 const year = date.getFullYear();
@@ -36,9 +35,9 @@ exports.create = async (req, res) => {
         })
 }
 
-exports.findTop24 = (req, res) => {
-    models.ee_current.findAll({limit: 24, order: [['id', 'ASC']]}).then(data => {
-        res.send(data)
+exports.findAll = (req, res) => {
+    models.ee_current.findAll({order: [['id', 'ASC'], ['timestamp', 'ASC']]}).then(data => {
+        res.send(data);
     }).catch(err => {
         res.status(500).send({
             message: err.message || "Some error occurred."
